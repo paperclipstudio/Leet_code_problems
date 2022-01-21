@@ -2,6 +2,13 @@ struct Solution;
 impl Solution {
     pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
         for i in 0..gas.len() {
+            // If it was sum to zero and was a valid solution
+            // then the next station would also be a valid station
+            // and there is only one valid solution
+            // unless there is only one station
+            if gas[i] - cost[i] < 1 && gas.len() != 1 {
+                continue;
+            }
             let starting_station = i;
             if Solution::can_finish_from(i, &gas, &cost) {
                 return i as i32;
@@ -43,7 +50,8 @@ mod tests {
 
     #[test]
     fn edge() {
-        assert!(Solution::can_finish_from(0, &[1].to_vec(), &[1].to_vec()))
+        assert!(Solution::can_finish_from(0, &[1].to_vec(), &[1].to_vec()));
+        assert_eq!(Solution::can_complete_circuit([1].to_vec(), [1].to_vec()), 0);
     }
 
     #[test]
@@ -64,6 +72,16 @@ mod tests {
         assert!(!Solution::can_finish_from(0,&gas, &cost));
         assert!(!Solution::can_finish_from(1,&gas, &cost));
         assert!(!Solution::can_finish_from(2,&gas, &cost));
+    } 
+    #[test]
+    fn mostly_free() {
+        let gas =  [0,0,0,0,0,0,0,0,0,0,2].to_vec();
+        let cost = [0,0,0,0,0,0,0,0,0,1,0].to_vec();
+
+        assert!(!Solution::can_finish_from(0,&gas, &cost));
+        assert!(!Solution::can_finish_from(1,&gas, &cost));
+        assert!(!Solution::can_finish_from(9,&gas, &cost));
+        assert!(Solution::can_finish_from(10,&gas, &cost));
     }
 
 
