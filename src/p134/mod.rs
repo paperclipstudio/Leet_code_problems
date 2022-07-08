@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 struct Solution;
 impl Solution {
     pub fn can_complete_circuit(gas: Vec<i32>, cost: Vec<i32>) -> i32 {
@@ -9,7 +11,6 @@ impl Solution {
             if gas[i] - cost[i] < 1 && gas.len() != 1 {
                 continue;
             }
-            let starting_station = i;
             if Solution::can_finish_from(i, &gas, &cost) {
                 return i as i32;
             }

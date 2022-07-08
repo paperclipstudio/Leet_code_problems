@@ -36,21 +36,6 @@ impl Solution {
 
     }
 
-    pub fn path_length(index:usize, nums: &mut Vec<i32>) -> i32 {
-        let mut current = index;
-        let mut length = 0;
-        let mut next = index;
-        loop {
-            if nums[current] == -1 {
-                break;
-            }
-            next = nums[current] as usize;
-            nums[current] = -1;
-            length += 1;
-            current = next;
-        }
-        return length;
-    }
 
 }
 
@@ -72,13 +57,6 @@ mod tests {
     }
 
 
-    #[test]
-    fn length() {
-        assert_eq!(Solution::path_length(0,&mut vec!{0,1,2}), 1);
-        assert_eq!(Solution::path_length(1,&mut vec!{0,1,2}), 1);
-        assert_eq!(Solution::path_length(2,&mut vec!{0,1,2}), 1);
-        assert_eq!(Solution::path_length(2,&mut vec!{1,2,0}), 3);
-    }
 
 
 }
